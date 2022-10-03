@@ -61,10 +61,15 @@ void NibeGw::connect()
     state = STATE_WAIT_START;
     
     #if defined(HARDWARE_SERIAL_WITH_PINS)
-      RS485->begin(9600, SERIAL_8N1, RS485RxPin, RS485TxPin);
+      RS485->begin(9600, SERIAL_8N1, 21, 22);
     #else
       RS485->begin(9600, SERIAL_8N1);
     #endif
+    if(debug) 
+  {
+    sprintf(debug_buf, "Connection state: %d", RS485->available());
+    debug(0, debug_buf);
+  }
     
     connectionState = true;
   }
