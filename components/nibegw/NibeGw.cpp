@@ -116,7 +116,7 @@ void NibeGw::loop()
 {
   if(debug) 
   {
-    sprintf(debug_buf, "Connection state: %d", state);
+    sprintf(debug_buf, "Connection state: %d", RS485->available());
     debug(0, debug_buf);
   }
     
