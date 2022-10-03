@@ -69,9 +69,7 @@ enum eTokenType
 typedef std::function<void(const byte* const data, int len)> callback_msg_received_type;
 typedef std::function<int(eTokenType token, byte* data)> callback_msg_token_received_type;
 
-#ifdef ENABLE_NIBE_DEBUG
 typedef std::function<void(byte verbose, char* data)> callback_debug_type;
-#endif
 
 #define SMS40     0x16
 #define RMU40     0x19
@@ -106,10 +104,8 @@ class NibeGw
     void sendNak();
     boolean shouldAckNakSend(byte address);
 
-    #ifdef ENABLE_NIBE_DEBUG
     callback_debug_type debug;
     char debug_buf[100];
-    #endif
 
   public:
     #if defined(HARDWARE_SERIAL_WITH_PINS)
@@ -121,10 +117,8 @@ class NibeGw
     #endif
     NibeGw& setCallback(callback_msg_received_type callback_msg_received, callback_msg_token_received_type callback_msg_token_received);
 
-    #ifdef ENABLE_NIBE_DEBUG
     NibeGw& setDebugCallback(callback_debug_type debug);
-    #endif
-
+  
     void connect();
     void disconnect();
     boolean connected();
