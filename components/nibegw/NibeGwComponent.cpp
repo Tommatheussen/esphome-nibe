@@ -10,6 +10,8 @@ NibeGwComponent::NibeGwComponent(int uart_no, int dir_pin, int rx_pin, int tx_pi
     gw_->setDebugCallback(std::bind(&NibeGwComponent::callback_debug, this, std::placeholders::_1, std::placeholders::_2));
 #endif
     gw_->setVerboseLevel(1);
+    
+    ESP_LOGD(TAG, "NIBE GW connected!");
 
 
 }
