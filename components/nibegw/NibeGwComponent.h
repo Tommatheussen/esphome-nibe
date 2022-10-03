@@ -21,7 +21,7 @@ typedef std::tuple<IPAddress, int> target_type;
 
 class NibeGwComponent: public Component {
     float get_setup_priority() const override { return setup_priority::BEFORE_CONNECTION; }
-    const char* TAG = "nibegw";
+    const char *TAG = "nibegw";
     const int requests_queue_max = 3;
     int udp_read_port_  = 9999;
     int udp_write_port_ = 10000;
