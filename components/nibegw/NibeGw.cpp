@@ -44,6 +44,11 @@ NibeGw::NibeGw(Serial_* serial, int RS485DirectionPin)
 
 void NibeGw::connect()
 {
+  sprintf(connectionState)
+  sprintf(RS485RxPin)
+  sprintf(RS485TxPin)
+  sprintf(state)
+    
   if (!connectionState)
   {
     state = STATE_WAIT_START;
