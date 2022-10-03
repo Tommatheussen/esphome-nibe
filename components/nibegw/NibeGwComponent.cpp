@@ -163,6 +163,5 @@ void NibeGwComponent::loop()
         gw_->loop();
     } while(gw_->messageStillOnProgress());
     
-    ESP_LOGI(TAG, gw_->messageStillOnProgress())
     
 }
