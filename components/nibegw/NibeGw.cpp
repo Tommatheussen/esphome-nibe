@@ -19,6 +19,8 @@
 #include "NibeGw.h"
 #include "Arduino.h"
 
+#include "esphome/core/log.h"
+
 #if defined(HARDWARE_SERIAL_WITH_PINS)
 NibeGw::NibeGw(HardwareSerial* serial, int RS485DirectionPin, int RS485RxPin, int RS485TxPin)
 #elif defined(HARDWARE_SERIAL)
@@ -44,8 +46,8 @@ NibeGw::NibeGw(Serial_* serial, int RS485DirectionPin)
 
 void NibeGw::connect()
 {
-  sprintf(RS485RxPin)
-  sprintf(RS485TxPin)
+  ESP_LOGD("nibegw", RS485RxPin);
+  ESP_LOGD("nibe", RS485TxPin);
     
   if (!connectionState)
   {
