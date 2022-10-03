@@ -111,7 +111,7 @@ void NibeGwComponent::callback_debug(byte verbose, char* data)
 }
 
 void NibeGwComponent::setup() {
-    ESP_LOGI(TAG, "Starting up");
+    ESP_LOGCONFIG(TAG, "Starting up");
     gw_->connect();
 }
 
