@@ -116,9 +116,8 @@ void NibeGw::loop()
 {
   if(debug) 
   {
-    sprintf(debug_buf, "Connection state: %d", connectionState);
+    sprintf(debug_buf, "Connection state: %d", state);
     debug(0, debug_buf);
-    debug(1, debug_buf);
   }
     
   if (!connectionState)
@@ -135,7 +134,7 @@ void NibeGw::loop()
         if (debug)
         {
           sprintf(debug_buf, "%02X ", b);
-          debug(3, debug_buf);
+          debug(0, debug_buf);
         }
 #endif
 
