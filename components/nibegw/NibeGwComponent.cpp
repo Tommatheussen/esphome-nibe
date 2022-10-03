@@ -144,7 +144,7 @@ void NibeGwComponent::dump_config() {
 void NibeGwComponent::loop()
 {
     ESP_LOGI(TAG, "loop")
-    ESP_LOGI("nibegwcustom", "loop")
+    ESP_LOGI("nibegw", "loop")
         
     if (network::is_connected() && !is_connected_) {
         ESP_LOGI(TAG, "Connecting network ports.");
