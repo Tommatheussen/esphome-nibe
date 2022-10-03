@@ -45,42 +45,42 @@ class NibeGwComponent: public Component {
 
     public:
 
-    void set_read_port(int port) { udp_read_port_ = port; };
-    void set_write_port(int port) { udp_write_port_ = port; };
+        void set_read_port(int port) { udp_read_port_ = port; };
+        void set_write_port(int port) { udp_write_port_ = port; };
 
-    void add_target(std::string ip, int port)
-    {
-        IPAddress address;
-        address.fromString(ip.c_str());
-        auto target = target_type(address, port);
-        udp_targets_.push_back(target);
-    }
-
-    void add_source_ip(std::string ip){
-        IPAddress address;
-        address.fromString(ip.c_str());
-        udp_source_ip_.insert(address);
-    };
-
-    void set_const_request(int address, int token, request_data_type request)
-    {
-        requests_const_[request_key_type(address, token)] = std::move(request);
-    }
-
-    void add_queued_request(int address, int token, request_data_type request)
-    {
-        auto& queue = requests_[request_key_type(address, token)];
-        if (queue.size() >= requests_queue_max) {
-            queue.pop();
+        void add_target(std::string ip, int port)
+        {
+            IPAddress address;
+            address.fromString(ip.c_str());
+            auto target = target_type(address, port);
+            udp_targets_.push_back(target);
         }
-        queue.push(std::move(request));
-    }
 
-    NibeGw& gw() { return *gw_; }
+        void add_source_ip(std::string ip){
+            IPAddress address;
+            address.fromString(ip.c_str());
+            udp_source_ip_.insert(address);
+        };
 
-    NibeGwComponent(int uart_no, int dir_pin, int rx_pin, int tx_pin);
+        void set_const_request(int address, int token, request_data_type request)
+        {
+            requests_const_[request_key_type(address, token)] = std::move(request);
+        }
 
-    void setup();
-    void dump_config();
-    void loop();
+        void add_queued_request(int address, int token, request_data_type request)
+        {
+            auto& queue = requests_[request_key_type(address, token)];
+            if (queue.size() >= requests_queue_max) {
+                queue.pop();
+            }
+            queue.push(std::move(request));
+        }
+
+        NibeGw& gw() { return *gw_; }
+
+        NibeGwComponent(int uart_no, int dir_pin, int rx_pin, int tx_pin);
+
+        void setup() override;
+        void dump_config() override;
+        void loop() override;
 };
