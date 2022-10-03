@@ -1,5 +1,8 @@
 #include "NibeGwComponent.h"
 
+using namespace esphome;
+
+
 NibeGwComponent::NibeGwComponent(int uart_no, int dir_pin, int rx_pin, int tx_pin)
 {
     
