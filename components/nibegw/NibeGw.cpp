@@ -46,8 +46,6 @@ NibeGw::NibeGw(Serial_* serial, int RS485DirectionPin)
 
 void NibeGw::connect()
 {
-  ESP_LOGD("nibegw", RS485RxPin);
-  ESP_LOGD("nibe", RS485TxPin);
     
   if (!connectionState)
   {
