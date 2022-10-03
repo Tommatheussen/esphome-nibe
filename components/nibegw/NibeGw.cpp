@@ -38,6 +38,14 @@ NibeGw::NibeGw(Serial_* serial, int RS485DirectionPin)
   RS485 = serial;
   directionPin = RS485DirectionPin;
   pinMode(directionPin, OUTPUT);
+  
+  pinMode(17, OUTPUT);
+  digitalWrite(17, HIGH);
+
+  pinMode(19, OUTPUT);
+  digitalWrite(19, HIGH);
+
+  
   digitalWrite(directionPin, LOW);
   setCallback(NULL, NULL);
 }
