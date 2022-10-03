@@ -90,13 +90,11 @@ NibeGw& NibeGw::setCallback(callback_msg_received_type callback_msg_received, ca
   return *this;
 }
 
-#ifdef ENABLE_NIBE_DEBUG
 NibeGw& NibeGw::setDebugCallback(callback_debug_type debug)
 {
   this->debug = debug;
   return *this;
-}
-#endif
+} 
 
 void NibeGw::setSendAcknowledge(boolean val)
 {
@@ -129,13 +127,11 @@ void NibeGw::loop()
       {
         byte b = RS485->read();
 
-#ifdef ENABLE_NIBE_DEBUG
         if (debug)
         {
           sprintf(debug_buf, "%02X ", b);
           debug(3, debug_buf);
         }
-#endif
 
         if (b == 0x5C)
         {
@@ -143,10 +139,8 @@ void NibeGw::loop()
           index = 1;
           state = STATE_WAIT_DATA;
 
-#ifdef ENABLE_NIBE_DEBUG
           if (debug)
             debug(4, "\nFrame start found\n");
-#endif
         }
       }
       break;
@@ -156,13 +150,11 @@ void NibeGw::loop()
       {
         byte b = RS485->read();
 
-#ifdef ENABLE_NIBE_DEBUG
         if (debug)
         {
           sprintf(debug_buf, "%02X", b);
           debug(3, debug_buf);
         }
-#endif
 
         if (index >= MAX_DATA_LEN)
         {
@@ -174,13 +166,11 @@ void NibeGw::loop()
           buffer[index++] = b;
           int msglen = checkNibeMessage(buffer, index);
 
-#ifdef ENABLE_NIBE_DEBUG
           if (debug)
           {
             sprintf(debug_buf, "\ncheckMsg=%d\n", msglen);
             debug(5, debug_buf);
           }
-#endif
 
           switch (msglen)
           {
@@ -198,10 +188,8 @@ void NibeGw::loop()
       break;
 
     case STATE_CRC_FAILURE:
-#ifdef ENABLE_NIBE_DEBUG
       if (debug)
         debug(1, "CRC failure\n");
-#endif
       if (shouldAckNakSend(buffer[2]))
         sendNak();
       state = STATE_WAIT_START;
@@ -215,10 +203,8 @@ void NibeGw::loop()
 
       if (buffer[0] == 0x5C && buffer[1] == 0x00 && buffer[4] == 0x00)
       {
-#ifdef ENABLE_NIBE_DEBUG
         if (debug)
           debug(1, "Token received\n");
-#endif
 
         int msglen = callback_msg_token_received((eTokenType)(buffer[3]), buffer);
         if (msglen > 0)
@@ -227,21 +213,17 @@ void NibeGw::loop()
         }
         else
         {
-#ifdef ENABLE_NIBE_DEBUG
           if (debug)
             debug(2, "No message to send\n");
-#endif
           sendAck();
         }
       }
       else
       {
-#ifdef ENABLE_NIBE_DEBUG
         if (debug)
         {
           debug(1, "Message received\n");
         }
-#endif
         sendAck();
       }
       state = STATE_WAIT_START;
@@ -287,12 +269,10 @@ int NibeGw::checkNibeMessage(const byte* const data, byte len)
 
       byte msg_checksum = data[datalen + 5];
 
-#ifdef ENABLE_NIBE_DEBUG
       if (debug) {
         sprintf(debug_buf, "\nchecksum=%02X, msg_checksum=%02X\n", checksum, msg_checksum);
         debug(4, debug_buf);
       }
-#endif
 
       if (checksum != msg_checksum)
       {
@@ -311,7 +291,6 @@ int NibeGw::checkNibeMessage(const byte* const data, byte len)
 
 void NibeGw::sendData(const byte* const data, byte len)
 {
-#ifdef ENABLE_NIBE_DEBUG
   if (debug)
   {
     debug(1, "Send message to heat pump: ");
@@ -322,7 +301,6 @@ void NibeGw::sendData(const byte* const data, byte len)
     }
     debug(1, "\n");
   }
-#endif
 
   digitalWrite(directionPin, HIGH);
   delay(1);
@@ -334,10 +312,8 @@ void NibeGw::sendData(const byte* const data, byte len)
 
 void NibeGw::sendAck()
 {
-#ifdef ENABLE_NIBE_DEBUG
   if (debug)
     debug(1, "Send ACK\n");
-#endif
 
   digitalWrite(directionPin, HIGH);
   delay(1);
@@ -349,10 +325,8 @@ void NibeGw::sendAck()
 
 void NibeGw::sendNak()
 {
-#ifdef ENABLE_NIBE_DEBUG
   if (debug)
     debug(1, "Send NACK\n");
-#endif
 
   digitalWrite(directionPin, HIGH);
   delay(1);
