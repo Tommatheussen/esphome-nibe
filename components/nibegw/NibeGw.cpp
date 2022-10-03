@@ -65,11 +65,19 @@ void NibeGw::connect()
     #else
       RS485->begin(9600, SERIAL_8N1);
     #endif
+    
+    #if defined(HARDWARE_SERIAL_WITH_PINS)
     if(debug) 
-  {
-    sprintf(debug_buf, "Connection state: %d", RS485->available());
-    debug(0, debug_buf);
-  }
+    {
+      sprintf(debug_buf, "Serial with pins");
+      debug(0, debug_buf);
+    }
+    #endif
+    if(debug) 
+    {
+      sprintf(debug_buf, "Connection state: %d", RS485->available());
+      debug(0, debug_buf);
+    }
     
     connectionState = true;
   }
@@ -131,12 +139,6 @@ boolean NibeGw::messageStillOnProgress()
 
 void NibeGw::loop()
 {
-  if(debug) 
-  {
-    sprintf(debug_buf, "Connection state: %d", RS485->available());
-    debug(0, debug_buf);
-  }
-    
   if (!connectionState)
     return;
 
