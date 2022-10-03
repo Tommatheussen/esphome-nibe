@@ -13,9 +13,9 @@ NibeGwComponent::NibeGwComponent(int uart_no, int dir_pin, int rx_pin, int tx_pi
     gw_ = new NibeGw(serial, dir_pin, rx_pin, tx_pin);
     gw_->setCallback(std::bind(&NibeGwComponent::callback_msg_received, this, std::placeholders::_1, std::placeholders::_2),
                      std::bind(&NibeGwComponent::callback_msg_token_received, this, std::placeholders::_1, std::placeholders::_2));
-#ifdef ENABLE_NIBE_DEBUG
+
     gw_->setDebugCallback(std::bind(&NibeGwComponent::callback_debug, this, std::placeholders::_1, std::placeholders::_2));
-#endif
+
     gw_->setVerboseLevel(10);
     
     ESP_LOGD(TAG, "NIBE GW connected!");
