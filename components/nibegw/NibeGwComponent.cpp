@@ -2,7 +2,10 @@
 
 NibeGwComponent::NibeGwComponent(int uart_no, int dir_pin, int rx_pin, int tx_pin)
 {
+    
+    ESP_LOGD(TAG, "NIBE GW connecting!");
     HardwareSerial* serial = new HardwareSerial(uart_no);
+   
     gw_ = new NibeGw(serial, dir_pin, rx_pin, tx_pin);
     gw_->setCallback(std::bind(&NibeGwComponent::callback_msg_received, this, std::placeholders::_1, std::placeholders::_2),
                      std::bind(&NibeGwComponent::callback_msg_token_received, this, std::placeholders::_1, std::placeholders::_2));
