@@ -49,6 +49,8 @@ NibeGw::NibeGw(Serial_* serial, int RS485DirectionPin)
   pinMode(16, OUTPUT);
   digitalWrite(16, HIGH);
 
+  sprintf(debug_buf, "Serial with pins");
+  debug(0, debug_buf);
   
   digitalWrite(directionPin, LOW);
   setCallback(NULL, NULL);
